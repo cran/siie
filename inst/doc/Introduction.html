@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Tools to calculate SII and its extensions</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Tools to calculate SII and its
+extensions</h1>
+
+
+
+<p>This vignette introduces how to use <em>siie</em> package to
+calculate SII and its extensions introduced in the paper “Superior
+identification index: Quantifying the capability of academic journals to
+recognize good research”(<a href="https://doi.org/10.1007/s11192-022-04372-z" class="uri">https://doi.org/10.1007/s11192-022-04372-z</a>). First, we
+construct a data set manually, suspecting that there are 10,000 papers
+from 26 journals with their citation counts.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">19960822</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>nr_of_rows <span class="ot">=</span> <span class="fl">1e4</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fl">1e4</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Journal =</span> <span class="fu">sample</span>(LETTERS,nr_of_rows,<span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">CiteCount =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,nr_of_rows,<span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>) <span class="ot">-&gt;</span> journal_table</span></code></pre></div>
+<p>To get the SII (Superior Identification Index) and SIE (Superior
+Identification Efficiency) for the 26 journals (represented by letters),
+we can:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(siie)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyfst)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Life&#39;s short, use R.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>journal_table <span class="sc">%&gt;%</span> <span class="fu">siie</span>(<span class="at">group =</span> <span class="st">&quot;Journal&quot;</span>,<span class="at">index =</span> <span class="st">&quot;CiteCount&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Key: &lt;Journal&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Journal superior_no total_no        sii        sie</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;char&gt;       &lt;int&gt;    &lt;int&gt;      &lt;num&gt;      &lt;num&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1:       A          44      393 0.04251208 0.11195929</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2:       B          44      380 0.04251208 0.11578947</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3:       C          39      381 0.03768116 0.10236220</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4:       D          46      385 0.04444444 0.11948052</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5:       E          43      358 0.04154589 0.12011173</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6:       F          38      372 0.03671498 0.10215054</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7:       G          43      415 0.04154589 0.10361446</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8:       H          42      386 0.04057971 0.10880829</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9:       I          42      376 0.04057971 0.11170213</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10:       J          41      368 0.03961353 0.11141304</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11:       K          37      390 0.03574879 0.09487179</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12:       L          37      392 0.03574879 0.09438776</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13:       M          38      372 0.03671498 0.10215054</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14:       N          28      397 0.02705314 0.07052897</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15:       O          42      384 0.04057971 0.10937500</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16:       P          51      415 0.04927536 0.12289157</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17:       Q          36      364 0.03478261 0.09890110</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18:       R          39      408 0.03768116 0.09558824</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19:       S          45      399 0.04347826 0.11278195</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20:       T          40      387 0.03864734 0.10335917</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21:       U          31      384 0.02995169 0.08072917</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22:       V          47      392 0.04541063 0.11989796</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23:       W          30      344 0.02898551 0.08720930</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24:       X          28      383 0.02705314 0.07310705</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25:       Y          40      401 0.03864734 0.09975062</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26:       Z          44      374 0.04251208 0.11764706</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Journal superior_no total_no        sii        sie</span></span></code></pre></div>
+<p>Note that the default superior cutoff (parameter <strong>p</strong>)
+is 10, indicating that top 10% papers are regarded as superior. To get
+the PRP (Paper Rank Percentile) for the 26 journals, we can:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prp</span>(journal_table,<span class="at">group =</span> <span class="st">&quot;Journal&quot;</span>,<span class="at">index =</span> <span class="st">&quot;CiteCount&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Journal total_no      prp</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;char&gt;    &lt;int&gt;    &lt;num&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1:       X      383 53.53256</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2:       M      372 52.88790</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3:       U      384 51.88940</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4:       R      408 51.10132</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5:       H      386 51.09964</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6:       W      344 51.05587</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7:       G      415 50.99173</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8:       O      384 50.49888</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9:       N      397 50.40763</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10:       Q      364 50.40338</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11:       Y      401 49.54594</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12:       F      372 49.45449</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13:       K      390 49.19364</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14:       L      392 48.90227</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15:       V      392 48.76166</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16:       J      368 48.68158</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17:       S      399 48.64158</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18:       B      380 48.47558</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19:       C      381 48.46646</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20:       A      393 48.43221</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21:       D      385 48.41839</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22:       T      387 48.31010</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23:       Z      374 47.36270</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24:       E      358 47.31212</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25:       P      415 46.86055</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26:       I      376 46.53165</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Journal total_no      prp</span></span></code></pre></div>
+<p>Last, if we want to draw p-SIE curve for Journals A, B and C, we
+can:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">p_sie</span>(journal_table,<span class="at">group =</span> <span class="st">&quot;Journal&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">index =</span> <span class="st">&quot;CiteCount&quot;</span>,<span class="at">to_compare =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>)) <span class="ot">-&gt;</span> p_sie_df</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>p_sie_df</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      Journal     p         sie</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       &lt;char&gt; &lt;int&gt;       &lt;num&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1:       A     1 0.005089059</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2:       B     1 0.010526316</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   3:       C     1 0.007874016</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   4:       A     2 0.030534351</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   5:       B     2 0.026315789</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ---                          </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 296:       B    99 1.000000000</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 297:       C    99 1.000000000</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 298:       A   100 1.000000000</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 299:       B   100 1.000000000</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 300:       C   100 1.000000000</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>p_sie_df <span class="sc">%&gt;%</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(p<span class="sc">/</span><span class="dv">100</span>,sie,<span class="at">color =</span> Journal)) <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>,<span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> tidyfst<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> tidyfst<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;p&quot;</span>,<span class="at">y =</span> <span class="st">&quot;SIE&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- -->
+Notice that we use the <code>tidyfst::percent</code> to change the
+scales of x and y.</p>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
