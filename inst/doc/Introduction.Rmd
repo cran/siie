@@ -1,6 +1,7 @@
 ---
 title: "Tools to calculate SII and its extensions"
 output: rmarkdown::html_vignette
+author: Tian-Yuan Huang
 vignette: >
   %\VignetteIndexEntry{Tools to calculate SII and its extensions}
   %\VignetteEngine{knitr::rmarkdown}
@@ -14,8 +15,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-  This vignette introduces how to use *siie* package to calculate SII and its extensions introduced in the paper "Superior identification index: Quantifying the capability of academic journals to recognize good research"(<https://doi.org/10.1007/s11192-022-04372-z>).
-  First, we construct a data set manually, suspecting that there are 10,000 papers from 26 journals with their citation counts.
+This vignette introduces how to use *siie* package to calculate SII and its extensions introduced in the paper "Superior identification index: Quantifying the capability of academic journals to recognize good research"(<https://doi.org/10.1007/s11192-022-04372-z>). First, we construct a data set manually, suspecting that there are 10,000 papers from 26 journals with their citation counts.
+
 ```{r}
 set.seed(19960822)
 nr_of_rows = 1e4
@@ -25,20 +26,32 @@ data.frame(
   CiteCount = sample(1:100,nr_of_rows,replace = TRUE)
 ) -> journal_table
 ```
-  To get the SII (Superior Identification Index) and SIE (Superior Identification Efficiency) for the 26 journals (represented by letters), we can:
+
+To get the SII (Superior Identification Index) and SIE (Superior Identification Efficiency) for the 26 journals (represented by letters), we can:
+
 ```{r}
 library(siie)
 library(tidyfst)
 
 journal_table %>% siie(group = "Journal",index = "CiteCount")
 ```
-  Note that the default superior cutoff (parameter **p**) is 10, indicating that top 10% papers are regarded as superior.
-  To get the PRP (Paper Rank Percentile) for the 26 journals, we can:
+
+Note that the default superior cutoff (parameter **p**) is 10, indicating that top 10% papers are regarded as superior. If we want to use a different **p**, say 1, we can:
+
+```{r,eval=FALSE}
+journal_table %>% siie(group = "Journal",index = "CiteCount",p = 1)
+```
+
+
+To get the PRP (Paper Rank Percentile) for the 26 journals, we can:
+
 ```{r}
 prp(journal_table,group = "Journal",index = "CiteCount")
 ```
-  Last, if we want to draw p-SIE curve for Journals A, B and C, we can:
-```{r}
+
+Last, if we want to draw p-SIE curve for Journals A, B and C, we can:
+
+```{r,out.width="90%"}
 library(ggplot2)
 
 p_sie(journal_table,group = "Journal",
@@ -54,6 +67,10 @@ p_sie_df %>%
   scale_x_continuous(labels = tidyfst::percent) +
   scale_y_continuous(labels = tidyfst::percent) +
   labs(x = "p",y = "SIE") +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = c(0.8, 0.3),
+        legend.background = element_rect(size=0.5,
+                                         color = "black",linetype="solid"))
 ```
-  Notice that we use the `tidyfst::percent` to change the scales of x and y. 
+
+<br> Notice that we use the `tidyfst::percent` to change the scales of x and y.

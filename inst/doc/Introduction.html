@@ -10,6 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+<meta name="author" content="Tian-Yuan Huang" />
 
 
 <title>Tools to calculate SII and its extensions</title>
@@ -339,6 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Tools to calculate SII and its
 extensions</h1>
+<h4 class="author">Tian-Yuan Huang</h4>
 
 
 
@@ -395,72 +397,80 @@ we can:</p>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26:       Z          44      374 0.04251208 0.11764706</span></span>
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Journal superior_no total_no        sii        sie</span></span></code></pre></div>
 <p>Note that the default superior cutoff (parameter <strong>p</strong>)
-is 10, indicating that top 10% papers are regarded as superior. To get
-the PRP (Paper Rank Percentile) for the 26 journals, we can:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prp</span>(journal_table,<span class="at">group =</span> <span class="st">&quot;Journal&quot;</span>,<span class="at">index =</span> <span class="st">&quot;CiteCount&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Journal total_no      prp</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;char&gt;    &lt;int&gt;    &lt;num&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1:       X      383 53.53256</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2:       M      372 52.88790</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3:       U      384 51.88940</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4:       R      408 51.10132</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5:       H      386 51.09964</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6:       W      344 51.05587</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7:       G      415 50.99173</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8:       O      384 50.49888</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9:       N      397 50.40763</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10:       Q      364 50.40338</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11:       Y      401 49.54594</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12:       F      372 49.45449</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13:       K      390 49.19364</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14:       L      392 48.90227</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15:       V      392 48.76166</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16:       J      368 48.68158</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17:       S      399 48.64158</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18:       B      380 48.47558</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19:       C      381 48.46646</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20:       A      393 48.43221</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21:       D      385 48.41839</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22:       T      387 48.31010</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23:       Z      374 47.36270</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24:       E      358 47.31212</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25:       P      415 46.86055</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26:       I      376 46.53165</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Journal total_no      prp</span></span></code></pre></div>
+is 10, indicating that top 10% papers are regarded as superior. If we
+want to use a different <strong>p</strong>, say 1, we can:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>journal_table <span class="sc">%&gt;%</span> <span class="fu">siie</span>(<span class="at">group =</span> <span class="st">&quot;Journal&quot;</span>,<span class="at">index =</span> <span class="st">&quot;CiteCount&quot;</span>,<span class="at">p =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>To get the PRP (Paper Rank Percentile) for the 26 journals, we
+can:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prp</span>(journal_table,<span class="at">group =</span> <span class="st">&quot;Journal&quot;</span>,<span class="at">index =</span> <span class="st">&quot;CiteCount&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Journal total_no      prp</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;char&gt;    &lt;int&gt;    &lt;num&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1:       X      383 53.53256</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2:       M      372 52.88790</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3:       U      384 51.88940</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4:       R      408 51.10132</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5:       H      386 51.09964</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6:       W      344 51.05587</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7:       G      415 50.99173</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8:       O      384 50.49888</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9:       N      397 50.40763</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10:       Q      364 50.40338</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11:       Y      401 49.54594</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12:       F      372 49.45449</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13:       K      390 49.19364</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14:       L      392 48.90227</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15:       V      392 48.76166</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16:       J      368 48.68158</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17:       S      399 48.64158</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18:       B      380 48.47558</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19:       C      381 48.46646</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20:       A      393 48.43221</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21:       D      385 48.41839</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22:       T      387 48.31010</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23:       Z      374 47.36270</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24:       E      358 47.31212</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25:       P      415 46.86055</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26:       I      376 46.53165</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Journal total_no      prp</span></span></code></pre></div>
 <p>Last, if we want to draw p-SIE curve for Journals A, B and C, we
 can:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">p_sie</span>(journal_table,<span class="at">group =</span> <span class="st">&quot;Journal&quot;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">index =</span> <span class="st">&quot;CiteCount&quot;</span>,<span class="at">to_compare =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>)) <span class="ot">-&gt;</span> p_sie_df</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>p_sie_df</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      Journal     p         sie</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       &lt;char&gt; &lt;int&gt;       &lt;num&gt;</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1:       A     1 0.005089059</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2:       B     1 0.010526316</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   3:       C     1 0.007874016</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   4:       A     2 0.030534351</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   5:       B     2 0.026315789</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ---                          </span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 296:       B    99 1.000000000</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 297:       C    99 1.000000000</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 298:       A   100 1.000000000</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 299:       B   100 1.000000000</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 300:       C   100 1.000000000</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>p_sie_df <span class="sc">%&gt;%</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(p<span class="sc">/</span><span class="dv">100</span>,sie,<span class="at">color =</span> Journal)) <span class="sc">+</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>,<span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> tidyfst<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> tidyfst<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;p&quot;</span>,<span class="at">y =</span> <span class="st">&quot;SIE&quot;</span>) <span class="sc">+</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- -->
-Notice that we use the <code>tidyfst::percent</code> to change the
-scales of x and y.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">p_sie</span>(journal_table,<span class="at">group =</span> <span class="st">&quot;Journal&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">index =</span> <span class="st">&quot;CiteCount&quot;</span>,<span class="at">to_compare =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>)) <span class="ot">-&gt;</span> p_sie_df</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>p_sie_df</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      Journal     p         sie</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       &lt;char&gt; &lt;int&gt;       &lt;num&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1:       A     1 0.005089059</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2:       B     1 0.010526316</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   3:       C     1 0.007874016</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   4:       A     2 0.030534351</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   5:       B     2 0.026315789</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ---                          </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 296:       B    99 1.000000000</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 297:       C    99 1.000000000</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 298:       A   100 1.000000000</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 299:       B   100 1.000000000</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 300:       C   100 1.000000000</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>p_sie_df <span class="sc">%&gt;%</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(p<span class="sc">/</span><span class="dv">100</span>,sie,<span class="at">color =</span> Journal)) <span class="sc">+</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>,<span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> tidyfst<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> tidyfst<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;p&quot;</span>,<span class="at">y =</span> <span class="st">&quot;SIE&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.3</span>),</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">size=</span><span class="fl">0.5</span>,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color =</span> <span class="st">&quot;black&quot;</span>,<span class="at">linetype=</span><span class="st">&quot;solid&quot;</span>))</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Please use the `linewidth` argument instead.</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" width="90%" /></p>
+<p><br> Notice that we use the <code>tidyfst::percent</code> to change
+the scales of x and y.</p>
 
 
 

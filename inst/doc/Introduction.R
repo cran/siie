@@ -19,10 +19,13 @@ library(tidyfst)
 
 journal_table %>% siie(group = "Journal",index = "CiteCount")
 
+## ----eval=FALSE---------------------------------------------------------------
+#  journal_table %>% siie(group = "Journal",index = "CiteCount",p = 1)
+
 ## -----------------------------------------------------------------------------
 prp(journal_table,group = "Journal",index = "CiteCount")
 
-## -----------------------------------------------------------------------------
+## ----out.width="90%"----------------------------------------------------------
 library(ggplot2)
 
 p_sie(journal_table,group = "Journal",
@@ -38,5 +41,8 @@ p_sie_df %>%
   scale_x_continuous(labels = tidyfst::percent) +
   scale_y_continuous(labels = tidyfst::percent) +
   labs(x = "p",y = "SIE") +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = c(0.8, 0.3),
+        legend.background = element_rect(size=0.5,
+                                         color = "black",linetype="solid"))
 

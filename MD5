@@ -1,13 +1,13 @@
-6568823cefa1057ec77b024fe4638ac3 *DESCRIPTION
+55cfb2a68465f30af1d162f3ec1b9fed *DESCRIPTION
 f53b0dbe1772462893bb6ee0806ac11c *LICENSE
 9ec82c683bb8136c0dbbd6106bfae7bf *NAMESPACE
 55cd6ac9aa72ffecc7d6f11509622b2a *R/p_sie.R
 e307a94d59f308f778e68ef7a2debb49 *R/prp.R
 9f0e3b003809cfad2eedb526764fd660 *R/siie.R
 9daeb1e763a9993b782e352347dce6ae *build/vignette.rds
-34a9aa0f43a24ddc82111fdfcbf5b682 *inst/doc/Introduction.R
-31a0f5f6a54901d02c1a57645c188ee2 *inst/doc/Introduction.Rmd
-85bd3a333dcf0e78c3efa9342090cc2b *inst/doc/Introduction.html
+a83a9220b882b70276420203380a1686 *inst/doc/Introduction.R
+dd4d62317d84131cebac727493629d62 *inst/doc/Introduction.Rmd
+707e66ebda75542ee92ba9d57413d50d *inst/doc/Introduction.html
 faff93e30f4b4da19d40d7bc401d7ef5 *man/p_sie.Rd
 f834201f82dc2938b70ad340d9834457 *man/prp.Rd
 a9c50a6cd6de5fd393090c7f84c28fab *man/siie.Rd
@@ -15,4 +15,4 @@ e60beea73081659a6cd022de93ac0413 *tests/testthat.R
 b3e5a1b135920e33474749d4ffeeabe1 *tests/testthat/test-p_sie.R
 5211781b7595edd5103e23474e44d315 *tests/testthat/test-prp.R
 46403864874922c1f667be555e309cd5 *tests/testthat/test-siie.R
-31a0f5f6a54901d02c1a57645c188ee2 *vignettes/Introduction.Rmd
+dd4d62317d84131cebac727493629d62 *vignettes/Introduction.Rmd
