@@ -25,7 +25,7 @@ journal_table %>% siie(group = "Journal",index = "CiteCount")
 ## -----------------------------------------------------------------------------
 prp(journal_table,group = "Journal",index = "CiteCount")
 
-## ----out.width="90%"----------------------------------------------------------
+## ----out.width="70%",fig.align = "center",fig.height = 6, fig.width = 6-------
 library(ggplot2)
 
 p_sie(journal_table,group = "Journal",
@@ -43,6 +43,6 @@ p_sie_df %>%
   labs(x = "p",y = "SIE") +
   theme_bw() +
   theme(legend.position = c(0.8, 0.3),
-        legend.background = element_rect(size=0.5,
+        legend.background = element_rect(linewidth=0.5,
                                          color = "black",linetype="solid"))
 
